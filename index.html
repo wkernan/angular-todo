@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todo">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Angular Todo App</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+	<link rel="stylesheet" href="css/xeditable.min.css">
+	<script src="js/xeditable.min.js"></script>
+	<script src="js/app.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="TodoCtrl" ng-init="init()">
+	<div class="container" ng-controller="TodoCtrl">
+		<div class="jumbotron text-center">
+			<h1><strong>Todo List</strong></h1>
+			<div class="input-group todo-list">
+				<input type="text" class="form-control" placeholder="Create a todo list" ng-model="newTodo">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="addTodo()"><span class="glyphicon glyphicon-plus"></span></button>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+					</span>
+					<input type="search" class="form-control" placeholder="Search" ng-model="todoSearch">
+				</div>
+				<h6 class="text-center">Click list name to edit</h6>
+				<div class="list-group">
+					<a href="#" ng-repeat="todos in model | filter :todoSearch" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changeTodo($index)">
+					<span class="glyphicon glyphicon-remove pull-right" ng-click="deleteTodo($index)"></span>
+					<span class="badge">{{todos.list.length}}</span>
+					<span editable-text="todos.name">{{todos.name}}</span>
+					<div class="progress">
+					  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{findPercent(todos.list)}}" aria-valuemin="0" aria-valuemax="100" style="width:{{findPercent(todos.list)}}%;">
+					    <span class="sr-only">60% Complete</span>
+					  </div>
+					</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-xs-8">
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" ng-click="addItem()"><span class="glyphicon glyphicon-plus"></span></button>
+							</span>
+							<input type="search" class="form-control" placeholder="Add item" ng-model="newItem">
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+							</span>
+							<input type="search" class="form-control" placeholder="Search" ng-model="itemSearch">
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<ul class="nav nav-pills todo-filter">
+						  <li ng-class="{'active' : show == 'All' }" ng-click="show='All'"><a href="#">All</a></li>
+						  <li ng-class="{'active' : show == 'Incomplete' }" ng-click="show='Incomplete'"><a href="#">Incomplete</a></li>
+						  <li ng-class="{'active' : show == 'Complete' }" ng-click="show='Complete'"><a href="#">Complete</a></li>
+						</ul>
+					</div>
+				</div>
+				<h6 class="text-center">Click item name to edit</h6>
+				<div class="list-group" ng-repeat="todos in model" ng-show="$index === currentShow" ng-model="todo.list">
+					<a href="#" class="list-group-item" ng-repeat="todo in todos.list | filter:showItem | filter:itemSearch">
+						<input class="todoCheckbox" ng-model="todo.isDone" type="checkbox" ng-click="addDone()">
+						<label class="todoCheckboxlabel" ></label>
+						<span class="glyphicon glyphicon-remove pull-right" ng-click="deleteItem($index)"></span>
+						<span class="item" editable-text="todo.item" ng-class="{'clicked': todo.isDone}">{{todo.item}}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

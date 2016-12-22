@@ -1,0 +1,29 @@
+span {
+	cursor: pointer;
+}
+
+.list-group-item>.badge {
+	float: none;
+}
+
+.todo-list {
+	width: 25%;
+	margin: 0 auto;
+}
+
+.nav>li>a {
+	padding: 8px 10px;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+.clicked {
+	text-decoration: line-through;
+}
+
+.progress {
+	margin: 5px 0 0 0;
+	height: 12px;
+}
